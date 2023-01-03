@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->json([
-        'message' => 'Welcome to the API',
-        'status' => 'success'
-    ]);
+    return [
+        'data' => 200,
+        'meta' => [
+            'success' => true,
+            'message' => 'Quiz Game API'
+        ]
+    ];
 });
 
 Route::get('/games', 'App\Http\Controllers\GameController@index');

@@ -21,7 +21,7 @@
   </div>
 
   <div v-else>
-    <!-- TODO -->
+    <Game :game="currentGame" @endGame="endGame" />
   </div>
 </template>
 
@@ -33,16 +33,26 @@ export default {
       number: 1,
       difficulty: '',
       started: false,
+      currentGame: null,
     }
   },
   methods: {
-    startGame() {
+    async startGame() {
       if (this.name && this.difficulty) {
-        this.$axios.get(
+        const { data } = await this.$axios.get(
           `/api/games?number=${this.number}&difficulty=${this.difficulty}&name=${this.name}`
         )
-        this.started = true
+        if (data.questions.length > 0) {
+          this.started = true
+          this.currentGame = data
+        } else {
+          // TODO : no questions found
+        }
       }
+    },
+    endGame() {
+      this.started = false
+      this.currentGame = null
     },
   },
 }

@@ -30,6 +30,6 @@ class QuestionController extends Controller
         foreach ($input['answers'] as $answer)
             $question->answers()->create($answer);
 
-        return response()->json($question);
+        return $this->success($question);
     }
 }

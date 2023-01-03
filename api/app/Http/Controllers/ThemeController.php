@@ -22,7 +22,6 @@ class ThemeController extends Controller
 
         $theme = Theme::create($input);
 
-        return response()->json($theme);
-        
+        return $this->resourceCreated($theme);
     }
 }

@@ -44,7 +44,7 @@ class GameController extends Controller
             'questions' => $data
         ];
 
-        return response()->json($data);
+        return $this->success($data);
     }
 
     /**

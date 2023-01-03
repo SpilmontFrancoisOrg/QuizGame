@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Answer;
+use App\Models\Game;
+use App\Models\Question;
+use App\Models\Theme;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +19,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Theme::factory()->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Question::factory()->create([
+            'theme_id' => 1,
+        ]);
+
+        Answer::factory(4)->create([
+            'question_id' => 1,
+            'is_correct' => false,
+        ]);
+
+        Answer::where('id', 4)->update([
+            'is_correct' => true,
+        ]);
+
+        Game::factory()->create();
     }
 }

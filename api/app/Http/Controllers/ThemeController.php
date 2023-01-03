@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 class ThemeController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return JsonResponse
+     */
+    public function index() : JsonResponse
+    {
+        $themes = Theme::all();
+
+        return $this->success($themes);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request

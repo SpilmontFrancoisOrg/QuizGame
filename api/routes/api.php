@@ -28,6 +28,7 @@ Route::get('/games', 'App\Http\Controllers\GameController@index');
 
 Route::get('/games/leaderboard', 'App\Http\Controllers\GameController@leaderboard');
 
+Route::get('/themes', 'App\Http\Controllers\ThemeController@index');
 Route::post('/themes', 'App\Http\Controllers\ThemeController@store');
 
 Route::post('/questions', 'App\Http\Controllers\QuestionController@store');

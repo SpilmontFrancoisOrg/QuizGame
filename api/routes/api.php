@@ -26,6 +26,8 @@ Route::get('/', function () {
 
 Route::get('/games', 'App\Http\Controllers\GameController@index');
 
+Route::get('/games/leaderboard', 'App\Http\Controllers\GameController@leaderboard');
+
 Route::post('/themes', 'App\Http\Controllers\ThemeController@store');
 
 Route::post('/questions', 'App\Http\Controllers\QuestionController@store');

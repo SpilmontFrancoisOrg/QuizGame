@@ -17,7 +17,7 @@ export default {
   ssr: false,
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -45,10 +45,23 @@ export default {
     baseURL: '/',
   },
 
+  proxy: {
+    '/api/': {
+      target: process.env.API_URL,
+      changeOrigin: true,
+    },
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
   tailwindcss: {
     configPath: 'tailwind.config.js',
+  },
+
+  loadingIndicator: {
+    name: 'circle',
+    color: '#1B9DD9',
+    background: '#EDF2F9',
   },
 }

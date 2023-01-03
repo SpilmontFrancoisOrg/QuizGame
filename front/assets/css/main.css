@@ -1,0 +1,71 @@
+
+@tailwind utilities;
+
+@font-face {
+  font-family: "RedHatDisplayBold";
+  src: url("assets/font-style/RedHatDisplay/RedHatDisplay-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RedHatDisplayMedium";
+  src: url("assets/font-style/RedHatDisplay/RedHatDisplay-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RedHatTextMedium";
+  src: url("assets/font-style/RedHatText/RedHatText-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("assets/font-style/RedHatText/RedHatText-Regular.ttf") format("truetype");
+}
+
+.font-semibold {
+  font-family: "RedHatTextMedium", serif;
+}
+
+.font-bold {
+  font-family: "RedHatDisplayBold", serif;
+}
+
+html {
+  font-family: "RedHatText", serif;
+}
+
+.center-component {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card {
+  @apply shadow-xl rounded-md bg-white text-text flex flex-col items-center;
+}
+
+input[type="text"], input[type="number"], select {
+  @apply bg-transparent rounded border border-gray-600 p-1 pl-3;
+}
+
+.btn {
+  @apply rounded text-white flex items-center justify-center py-2 px-4 text-sm focus:outline focus:outline-2;
+  font-family: "RedHatDisplayMedium", serif;
+  font-size: 16px;
+}
+
+.btn-primary {
+  @apply btn bg-blue hover:bg-[#0071A5] focus:outline-[#94D7F6];
+}
+
+.btn-secondary {
+  @apply btn bg-[#004C6B] hover:bg-[#003043] focus:outline-[#1B80A9];
+}
+
+.btn-danger {
+  @apply btn bg-red hover:bg-[#CF2C23] focus:outline-[#FC746C];
+}
+
+.btn-success {
+  @apply btn bg-green hover:bg-[#49A249] focus:outline-[#9CE99C];
+}

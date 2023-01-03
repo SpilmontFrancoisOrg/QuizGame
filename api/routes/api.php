@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return response()->json([
         'message' => 'Welcome to the API',
-        'status' => 'Connected'
+        'status' => 'success'
     ]);
 });
+
+Route::get('/games', 'App\Http\Controllers\GameController@index');
+
+Route::post('/themes', 'App\Http\Controllers\ThemeController@store');
+
+Route::post('/questions', 'App\Http\Controllers\QuestionController@store');

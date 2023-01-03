@@ -20,9 +20,7 @@
     <button class="btn-success" @click="startGame()">Jouer !</button>
   </div>
 
-  <div v-else>
-    <Game :game="currentGame" @endGame="endGame" />
-  </div>
+  <Game v-else :game="currentGame" @endGame="endGame" />
 </template>
 
 <script>

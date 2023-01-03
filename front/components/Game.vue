@@ -78,13 +78,11 @@ export default {
     checkAnswer(answer) {
       this.hasAnswered = true
       if (answer.is_correct) this.score++
-
-      if (this.currentQuestion < this.currentGame.questions.length - 1)
-        this.currentQuestion++
     },
     nextQuestion() {
       this.hasAnswered = false
-      this.currentQuestion++
+      if (this.currentQuestion < this.currentGame.questions.length - 1)
+        this.currentQuestion++
     },
     endGame() {
       this.$emit('endGame')

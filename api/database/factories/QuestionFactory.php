@@ -18,7 +18,7 @@ class QuestionFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'difficulty' => fake()->numberBetween(1, 5),
+            'difficulty' => fake()->numberBetween(1, 3),
         ];
     }
 }

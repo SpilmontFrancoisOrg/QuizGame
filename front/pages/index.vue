@@ -1,56 +1,66 @@
 <template>
-  <div v-if="!started" class="center-component card py-6 space-y-4 w-1/2">
-    <div class="flex flex-col space-y-2 w-2/3">
-      <label for="name" class="text-xl">Nom du joueur :</label>
-      <input v-model="name" type="text" name="name" />
-    </div>
-    <div class="flex flex-col space-y-2 w-2/3">
-      <label for="number" class="text-xl">Nombre de questions :</label>
-      <input v-model="number" type="number" name="number" min="1" />
-    </div>
-    <div class="flex flex-col space-y-2 w-2/3">
-      <label for="difficulty" class="text-xl">Difficulté</label>
-      <select v-model="difficulty" name="difficulty">
-        <option value="1">Facile</option>
-        <option value="2">Moyen</option>
-        <option value="3">Difficile</option>
-      </select>
+  <div class="space-y-6">
+    <div class="card flex-row justify-between p-6">
+      <div class="w-1/3">
+        <img src="@/assets/logo.png" class="h-16 w-16" />
+      </div>
+      <div class="w-1/3 flex items-center justify-center">
+        <span class="font-semibold text-2xl">Choisissez le thème</span>
+      </div>
+      <div class="w-1/3" />
     </div>
 
-    <button class="btn-success" @click="startGame()">Jouer !</button>
+    <div v-if="loaded" class="flex flex-wrap">
+      <div
+        v-for="theme in themes"
+        :key="theme.id"
+        class="
+          card
+          justify-center
+          cursor-pointer
+          w-[200px]
+          h-32
+          bg-no-repeat bg-center
+          m-10
+        "
+        :style="{ backgroundImage: 'url(' + theme.image + ')' }"
+        @click="chooseTheme(theme.id)"
+      >
+        <span
+          class="bg-white opacity-80 rounded-full px-2 py-1 text-xl font-bold"
+        >
+          {{ theme.name }}
+        </span>
+      </div>
+    </div>
+    <div v-else>
+      <div class="card flex-row justify-center space-x-4 p-4">
+        <fa-icon :icon="['fas', 'spinner']" class="animate-spin text-blue" />
+        <span class="text-xl font-semibold">Chargement...</span>
+      </div>
+    </div>
   </div>
-
-  <Game v-else :game="currentGame" @endGame="endGame" />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      name: '',
-      number: 1,
-      difficulty: '',
-      started: false,
-      currentGame: null,
+      themes: null,
+      loaded: false,
     }
   },
+  mounted() {
+    this.getThemes()
+  },
   methods: {
-    async startGame() {
-      if (this.name && this.difficulty) {
-        const { data } = await this.$axios.get(
-          `/api/games?number=${this.number}&difficulty=${this.difficulty}&name=${this.name}`
-        )
-        if (data.questions.length > 0) {
-          this.started = true
-          this.currentGame = data
-        } else {
-          // TODO : no questions found
-        }
-      }
+    async getThemes() {
+      const { data } = await this.$axios.$get('/api/themes')
+      this.themes = data
+      this.loaded = true
     },
-    endGame() {
-      this.started = false
-      this.currentGame = null
+    chooseTheme(id) {
+      this.$router.push(`/game?theme=${id}`)
     },
   },
 }

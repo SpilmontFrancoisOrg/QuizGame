@@ -32,11 +32,6 @@ class QuestionController extends Controller
         foreach ($input['answers'] as $answer)
             $question->answers()->create($answer);
 
-        return response()->json(new QuestionResource($question));
+        return $this->success(new QuestionResource($question));
     }
-
-    /*public function show(Question $request){
-        return new QuestionResource($request);
-    }*/
-
 }

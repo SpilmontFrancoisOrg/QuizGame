@@ -1,57 +1,70 @@
 <template>
   <div class="space-y-6">
-    <div class="card flex-row justify-evenly py-4">
-      <span class="text-2xl font-semibold">Partie en cours</span>
+    <div class="card flex-row justify-between p-6">
+      <span class="text-2xl font-semibold w-1/3">Partie en cours</span>
 
-      <span class="text-xl font-semibold"> Score : {{ score }} </span>
+      <div class="flex justify-center text-xl font-semibold space-x-2 w-1/3">
+        <span>Score : {{ score }}</span>
+        <span v-if="hasAnswered && answerIsCorrect" class="text-green">
+          +1
+        </span>
+      </div>
 
-      <span class="text-xl font-semibold">
+      <span class="flex justify-end text-xl font-semibold w-1/3">
         Question {{ currentQuestion + 1 }} sur
-        {{ currentGame.questions.length }}
+        {{ game.questions.length }}
       </span>
     </div>
 
     <div class="card p-4">
-      <div class="flex flex-col space-y-4">
-        <span class="text-xl font-semibold text-center">
-          {{ currentGame.questions[currentQuestion].question.name }}
-        </span>
+      <div class="flex flex-col space-y-10">
+        <div class="flex flex-col space-y-6">
+          <span class="text-xl font-semibold text-center">
+            {{ game.questions[currentQuestion].question.name }}
+          </span>
 
-        <div class="grid grid-cols-2 gap-4">
-          <button
-            v-for="(answer, index) in currentGame.questions[currentQuestion]
-              .answers"
-            :key="index"
-            class="btn-primary"
-            :class="{
-              'btn-success': hasAnswered && answer.is_correct,
-              'btn-danger': hasAnswered && !answer.is_correct,
-            }"
-            :disabled="hasAnswered"
-            @click="checkAnswer(answer)"
-          >
-            {{ answer.name }}
-          </button>
+          <div class="grid grid-cols-2 gap-4">
+            <button
+              v-for="(answer, index) in game.questions[currentQuestion].answers"
+              :key="index"
+              class="btn-primary space-x-4"
+              :class="{
+                'btn-success': hasAnswered && answer.is_correct,
+                'btn-danger': hasAnswered && !answer.is_correct,
+              }"
+              :disabled="hasAnswered"
+              @click="checkAnswer(answer)"
+            >
+              <fa-icon
+                v-if="hasAnswered"
+                :icon="answer.is_correct ? ['fas', 'check'] : ['fas', 'xmark']"
+              />
+              <span>{{ answer.name }}</span>
+            </button>
+          </div>
         </div>
 
         <button
-          v-if="
-            hasAnswered && currentQuestion < currentGame.questions.length - 1
-          "
+          v-if="hasAnswered && currentQuestion < game.questions.length - 1"
           class="btn-secondary"
           @click="nextQuestion()"
         >
           Question suivante
         </button>
-        <button
+        <div
           v-else-if="
-            hasAnswered && currentQuestion === currentGame.questions.length - 1
+            hasAnswered && currentQuestion === game.questions.length - 1
           "
-          class="btn-warning"
-          @click="endGame()"
+          class="flex items-center justify-center space-x-4"
         >
-          Fin de la partie
-        </button>
+          <button class="btn-secondary space-x-4" @click="showLeaderboard()">
+            <fa-icon :icon="['fas', 'trophy']" />
+            <span>Voir le leaderboard</span>
+          </button>
+          <button class="btn-warning" @click="endGame()">
+            Fin de la partie
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -68,24 +81,35 @@ export default {
   },
   data() {
     return {
-      currentGame: this.game,
       currentQuestion: 0,
       score: 0,
       hasAnswered: false,
+      answerIsCorrect: false,
     }
   },
   methods: {
     checkAnswer(answer) {
       this.hasAnswered = true
-      if (answer.is_correct) this.score++
+      if (answer.is_correct) {
+        this.score++
+        this.answerIsCorrect = true
+        setTimeout(() => {
+          this.answerIsCorrect = false
+        }, 1000)
+      }
     },
     nextQuestion() {
       this.hasAnswered = false
-      if (this.currentQuestion < this.currentGame.questions.length - 1)
+      if (this.currentQuestion < this.game.questions.length - 1)
         this.currentQuestion++
     },
     endGame() {
-      this.$emit('endGame')
+      this.$emit('endGame', this.score)
+      this.$router.push('/')
+    },
+    showLeaderboard() {
+      this.$emit('endGame', this.score)
+      this.$router.push('/leaderboard')
     },
   },
 }

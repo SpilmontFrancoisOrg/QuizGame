@@ -6,7 +6,7 @@ use App\Models\Game;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\GameResource;
+use App\Http\Resources\GameResource;
 
 class GameController extends Controller
 {
@@ -20,7 +20,8 @@ class GameController extends Controller
     {
         $number = $request->input('number');
         $difficulty = $request->input('difficulty');
-        $questions = Question::inRandomOrder()->where('difficulty', $difficulty)->take($number)->get();
+        $theme = $request->input('theme');
+        $questions = Question::inRandomOrder()->where(['difficulty' => $difficulty, 'theme_id' => $theme])->take($number)->get();
 
         $answers = [];
         foreach ($questions as $question)
@@ -45,74 +46,22 @@ class GameController extends Controller
             'questions' => $data
         ];
 
-        //return response()->json($data);
-        return response()->json(new GameResource($data));
+        return $this->success(new GameResource($data));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function leaderboard(Request $request): JsonResponse
     {
-        //
+        $games = Game::orderBy('score', 'desc')->get();
+
+        return $this->success($games);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function endGame(Request $request, Game $game): JsonResponse
     {
-        //
-        
-    }
+        $game->score = $request->input('score');
+        $game->time = $request->input('time');
+        $game->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Game $game)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Game $game)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Game $game)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Game $game)
-    {
-        //
+        return $this->success($game);
     }
 }

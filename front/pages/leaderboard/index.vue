@@ -31,7 +31,10 @@
             <th class="border-b border-x border-text px-4 py-2 font-semibold">
               Temps
             </th>
-            <th class="border-b border-text px-4 py-2 font-semibold">Score</th>
+            <th class="border-b border-r border-text px-4 py-2 font-semibold">
+              Score
+            </th>
+            <th class="border-b border-text px-4 py-2 font-semibold">Date</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +45,10 @@
             <td class="border-b border-x border-text px-4 py-2">
               {{ player.time }} s
             </td>
-            <td class="border-b border-text px-4 py-2">{{ player.score }}</td>
+            <td class="border-b border-r border-text px-4 py-2">
+              {{ player.score }}
+            </td>
+            <td class="border-b border-text px-4 py-2">{{ player.date }}</td>
           </tr>
         </tbody>
       </table>
@@ -51,6 +57,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -64,6 +72,10 @@ export default {
     async getPlayers() {
       const { data } = await this.$axios.$get('/api/games/leaderboard')
       this.players = data
+      this.players.map((player) => {
+        player.date = moment(player.date).format('DD/MM/YYYY')
+        return player
+      })
     },
   },
 }

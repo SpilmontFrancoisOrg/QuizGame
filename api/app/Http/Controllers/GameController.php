@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\GameResource;
 
 class GameController extends Controller
 {
@@ -44,7 +45,8 @@ class GameController extends Controller
             'questions' => $data
         ];
 
-        return response()->json($data);
+        //return response()->json($data);
+        return response()->json(new GameResource($data));
     }
 
     /**
@@ -66,6 +68,7 @@ class GameController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**

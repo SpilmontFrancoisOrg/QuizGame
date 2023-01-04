@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Resources\QuestionResource;
+
 
 class QuestionController extends Controller
 {
@@ -30,6 +32,11 @@ class QuestionController extends Controller
         foreach ($input['answers'] as $answer)
             $question->answers()->create($answer);
 
-        return response()->json($question);
+        return response()->json(new QuestionResource($question));
     }
+
+    /*public function show(Question $request){
+        return new QuestionResource($request);
+    }*/
+
 }

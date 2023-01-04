@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Theme;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\ThemeResource;
 
 class ThemeController extends Controller
 {
@@ -22,7 +23,6 @@ class ThemeController extends Controller
 
         $theme = Theme::create($input);
 
-        return response()->json($theme);
-        
+        return response()->json( new ThemeResource($theme));
     }
 }

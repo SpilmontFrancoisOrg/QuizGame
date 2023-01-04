@@ -14,13 +14,12 @@ class GameResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
-        'id' => $this->id,
-        'name' => $this->name,
-        'score' => $this->score,
-        'date' => $this->date,
-        'time' =>$this->time,
+            'id' => $this->id,
+            'name' => $this->name,
+            'score' => $this->score,
+            'date' => $this->date,
+            'time' => $this->time,
         ];
     }
 }

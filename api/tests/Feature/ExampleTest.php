@@ -18,9 +18,12 @@ class ExampleTest extends TestCase
         $response = $this->get('/api');
 
         $response->assertStatus(200);
-        $response-> assertJsonStructure([
-            "data", "meta" => ["success", "message"]
+        $response->assertJsonStructure([
+            "data",
+            "meta" => [
+                "success",
+                "message"
+            ]
         ]);
     }
-    
 }

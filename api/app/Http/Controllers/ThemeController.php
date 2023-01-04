@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Theme;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ThemeController extends Controller
 {
@@ -13,9 +14,13 @@ class ThemeController extends Controller
      *
      * @return JsonResponse
      */
-    public function index() : JsonResponse
+    public function index(): JsonResponse
     {
         $themes = Theme::all();
+
+        foreach ($themes as $theme) {
+            $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id=LqDwnvbRRQPNg17mZdK4b-ga63HEeq-Nx2EDfH5ha48&query=' . $theme->name)['results'][0]['urls']['thumb'];
+        }
 
         return $this->success($themes);
     }
@@ -26,7 +31,7 @@ class ThemeController extends Controller
      * @param  Request  $request
      * @return JsonResponse
      */
-    public function store(Request $request) : JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $input = $request->validate([
             'name' => 'string|required',

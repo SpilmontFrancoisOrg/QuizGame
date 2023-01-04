@@ -51,11 +51,11 @@ class GameController extends Controller
         return $this->success($data);
     }
 
-    public function leaderboard(Request $request): JsonResponse
+    public function leaderboard(): JsonResponse
     {
         $games = Game::orderBy('score', 'desc')->get();
 
-        return $this->success($games);
+        return $this->success(GameResource::collection($games));
     }
 
     public function endGame(Request $request, Game $game): JsonResponse
@@ -64,6 +64,6 @@ class GameController extends Controller
         $game->time = $request->input('time');
         $game->save();
 
-        return $this->success($game);
+        return $this->success(new GameResource($game));
     }
 }

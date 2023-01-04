@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AnswerResource;
 use App\Models\Game;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Resources\GameResource;
+use App\Http\Resources\QuestionResource;
 
 class GameController extends Controller
 {
@@ -30,8 +32,8 @@ class GameController extends Controller
         $data = [];
         foreach ($questions as $key => $question)
             $data[] = [
-                'question' => $question,
-                'answers' => $answers[$key]
+                'question' => new QuestionResource($question),
+                'answers' => new AnswerResource($answers[$key])
             ];
 
         $name = $request->input('name');
@@ -42,11 +44,11 @@ class GameController extends Controller
         $game->save();
 
         $data = [
-            'game' => $game,
+            'game' => new GameResource($game),
             'questions' => $data
         ];
 
-        return $this->success(new GameResource($data));
+        return $this->success($data);
     }
 
     public function leaderboard(Request $request): JsonResponse

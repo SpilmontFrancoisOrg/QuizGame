@@ -25,6 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/games', 'App\Http\Controllers\GameController@index');
+Route::post('/games/{game}/end', 'App\Http\Controllers\GameController@endGame');
 
 Route::get('/games/leaderboard', 'App\Http\Controllers\GameController@leaderboard');
 

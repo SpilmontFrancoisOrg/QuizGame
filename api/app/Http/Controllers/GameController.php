@@ -54,4 +54,13 @@ class GameController extends Controller
 
         return $this->success($games);
     }
+
+    public function endGame(Request $request, Game $game): JsonResponse
+    {
+        $game->score = $request->input('score');
+        $game->time = $request->input('time');
+        $game->save();
+
+        return $this->success($game);
+    }
 }

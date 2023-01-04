@@ -19,7 +19,7 @@ class ThemeController extends Controller
         $themes = Theme::all();
 
         foreach ($themes as $theme) {
-            $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id=LqDwnvbRRQPNg17mZdK4b-ga63HEeq-Nx2EDfH5ha48&query=' . $theme->name)['results'][0]['urls']['thumb'];
+            $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id=' . env('CLIENT_ID') . '&query=' . $theme->name)['results'][0]['urls']['thumb'];
         }
 
         return $this->success($themes);

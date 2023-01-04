@@ -62,18 +62,13 @@ export default {
       }
     },
     async endGame(score) {
-      const { data } = await this.$axios.$post(
-        `/api/games/${this.currentGame.game.id}/end`,
-        {
-          score,
-          time: this.timer,
-        }
-      )
+      await this.$axios.$post(`/api/games/${this.currentGame.game.id}/end`, {
+        score,
+        time: this.timer,
+      })
 
       this.started = false
       this.currentGame = null
-
-      console.log(data)
     },
   },
 }

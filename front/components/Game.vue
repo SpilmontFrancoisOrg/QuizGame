@@ -98,8 +98,10 @@ export default {
     },
     endGame() {
       this.$emit('endGame', this.score)
+      this.$router.push('/')
     },
     showLeaderboard() {
+      this.$emit('endGame', this.score)
       this.$router.push('/leaderboard')
     },
   },

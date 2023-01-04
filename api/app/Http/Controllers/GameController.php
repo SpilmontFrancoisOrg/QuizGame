@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\Question;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Resources\GameResource;
 
 class GameController extends Controller
 {
@@ -45,7 +46,7 @@ class GameController extends Controller
             'questions' => $data
         ];
 
-        return $this->success($data);
+        return $this->success(new GameResource($data));
     }
 
     public function leaderboard(Request $request): JsonResponse

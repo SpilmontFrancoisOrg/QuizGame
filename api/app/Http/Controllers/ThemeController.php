@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Theme;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Http\Resources\ThemeResource;
 use Illuminate\Support\Facades\Http;
 
 class ThemeController extends Controller
@@ -39,6 +40,6 @@ class ThemeController extends Controller
 
         $theme = Theme::create($input);
 
-        return $this->resourceCreated($theme);
+        return $this->resourceCreated(new ThemeResource($theme));
     }
 }

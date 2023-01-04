@@ -16,6 +16,16 @@ export default {
 
   ssr: false,
 
+  fontawesome: {
+    component: 'fa',
+    suffix: true,
+    icons: {
+      solid: true,
+      regular: [],
+      brands: [],
+    },
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.css'],
 
@@ -31,6 +41,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/fontawesome',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="space-y-6">
     <div class="card flex-row justify-between p-6">
       <div class="w-1/3">
         <img src="@/assets/logo.png" class="h-16 w-16" />
@@ -10,7 +10,7 @@
       <div class="w-1/3" />
     </div>
 
-    <div class="flex flex-wrap">
+    <div v-if="loaded" class="flex flex-wrap">
       <div
         v-for="theme in themes"
         :key="theme.id"
@@ -26,9 +26,17 @@
         :style="{ backgroundImage: 'url(' + theme.image + ')' }"
         @click="chooseTheme(theme.id)"
       >
-        <span class="bg-white opacity-80 rounded-full px-2 py-1 text-xl font-bold">
+        <span
+          class="bg-white opacity-80 rounded-full px-2 py-1 text-xl font-bold"
+        >
           {{ theme.name }}
         </span>
+      </div>
+    </div>
+    <div v-else>
+      <div class="card flex-row justify-center space-x-4 p-4">
+        <fa-icon :icon="['fas', 'spinner']" class="animate-spin text-blue" />
+        <span class="text-xl font-semibold">Chargement...</span>
       </div>
     </div>
   </div>
@@ -39,6 +47,7 @@ export default {
   data() {
     return {
       themes: null,
+      loaded: false,
     }
   },
   mounted() {
@@ -48,6 +57,7 @@ export default {
     async getThemes() {
       const { data } = await this.$axios.$get('/api/themes')
       this.themes = data
+      this.loaded = true
     },
     chooseTheme(id) {
       this.$router.push(`/game?theme=${id}`)

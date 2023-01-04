@@ -17,25 +17,31 @@
     </div>
 
     <div class="card p-4">
-      <div class="flex flex-col space-y-6">
-        <span class="text-xl font-semibold text-center">
-          {{ game.questions[currentQuestion].question.name }}
-        </span>
+      <div class="flex flex-col space-y-10">
+        <div class="flex flex-col space-y-6">
+          <span class="text-xl font-semibold text-center">
+            {{ game.questions[currentQuestion].question.name }}
+          </span>
 
-        <div class="grid grid-cols-2 gap-4">
-          <button
-            v-for="(answer, index) in game.questions[currentQuestion].answers"
-            :key="index"
-            class="btn-primary"
-            :class="{
-              'btn-success': hasAnswered && answer.is_correct,
-              'btn-danger': hasAnswered && !answer.is_correct,
-            }"
-            :disabled="hasAnswered"
-            @click="checkAnswer(answer)"
-          >
-            {{ answer.name }}
-          </button>
+          <div class="grid grid-cols-2 gap-4">
+            <button
+              v-for="(answer, index) in game.questions[currentQuestion].answers"
+              :key="index"
+              class="btn-primary space-x-4"
+              :class="{
+                'btn-success': hasAnswered && answer.is_correct,
+                'btn-danger': hasAnswered && !answer.is_correct,
+              }"
+              :disabled="hasAnswered"
+              @click="checkAnswer(answer)"
+            >
+              <fa-icon
+                v-if="hasAnswered"
+                :icon="answer.is_correct ? ['fas', 'check'] : ['fas', 'xmark']"
+              />
+              <span>{{ answer.name }}</span>
+            </button>
+          </div>
         </div>
 
         <button
@@ -49,10 +55,11 @@
           v-else-if="
             hasAnswered && currentQuestion === game.questions.length - 1
           "
-          class="flex space-x-4"
+          class="flex items-center justify-center space-x-4"
         >
-          <button class="btn-secondary" @click="showLeaderboard()">
-            Voir le leaderboard
+          <button class="btn-secondary space-x-4" @click="showLeaderboard()">
+            <fa-icon :icon="['fas', 'trophy']" />
+            <span>Voir le leaderboard</span>
           </button>
           <button class="btn-warning" @click="endGame()">
             Fin de la partie

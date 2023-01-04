@@ -1,6 +1,12 @@
 <template>
   <div v-if="!started" class="center-component card py-6 space-y-4 w-1/2">
-    <span class="text-2xl font-semibold">Paramètres de jeu</span>
+    <div class="flex items-center justify-between px-6 w-full">
+      <HomeButton />
+      <div class="flex items-center justify-center w-1/3">
+        <span class="text-2xl font-semibold">Paramètres de jeu</span>
+      </div>
+      <div class="w-1/3" />
+    </div>
     <div class="flex flex-col space-y-2 w-2/3">
       <label for="name" class="text-xl">Nom du joueur :</label>
       <input v-model="name" type="text" name="name" />

@@ -19,7 +19,8 @@ class GameController extends Controller
     {
         $number = $request->input('number');
         $difficulty = $request->input('difficulty');
-        $questions = Question::inRandomOrder()->where('difficulty', $difficulty)->take($number)->get();
+        $theme = $request->input('theme');
+        $questions = Question::inRandomOrder()->where(['difficulty' => $difficulty, 'theme_id' => $theme])->take($number)->get();
 
         $answers = [];
         foreach ($questions as $question)

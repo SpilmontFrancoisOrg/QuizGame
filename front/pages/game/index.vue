@@ -1,6 +1,6 @@
 <template>
   <div v-if="!started" class="center-component card py-6 space-y-4 w-1/2">
-    <img src="@/assets/logo.png" />
+    <span class="text-2xl font-semibold">Paramètres de jeu</span>
     <div class="flex flex-col space-y-2 w-2/3">
       <label for="name" class="text-xl">Nom du joueur :</label>
       <input v-model="name" type="text" name="name" />
@@ -28,9 +28,9 @@
 export default {
   data() {
     return {
-      name: '',
+      name: null,
       number: 1,
-      difficulty: '',
+      difficulty: 1,
       started: false,
       currentGame: null,
     }
@@ -45,8 +45,13 @@ export default {
           this.started = true
           this.currentGame = data
         } else {
-          // TODO : no questions found
+          this.$toast.error('Aucune question n\'a été trouvée avec ces paramètres')
         }
+      } else {
+        const toast = this.$toast.error('Veuillez remplir tous les champs')
+        setTimeout(() => {
+          toast.remove()
+        }, 5000)
       }
     },
     endGame() {

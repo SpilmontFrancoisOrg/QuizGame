@@ -73,3 +73,8 @@ input[type="text"], input[type="number"], select {
 .btn-warning {
   @apply btn bg-orange hover:bg-[#E66015] focus:outline-[#FFB88F];
 }
+
+.toasted-container.top-right {
+  top: 0% !important;
+  right: 1% !important;
+}

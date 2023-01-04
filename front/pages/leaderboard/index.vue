@@ -13,17 +13,19 @@
       >
         <thead>
           <tr>
-            <th class="border-r border-b border-text px-4 py-2 font-semibold">
+            <th class="border-b border-text px-4 py-2 font-semibold">
               Nom
             </th>
+            <th class="border-b border-x border-text px-4 py-2 font-semibold">Temps</th>
             <th class="border-b border-text px-4 py-2 font-semibold">Score</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="player in players" :key="player.id">
-            <td class="border-r border-b border-text px-4 py-2">
+            <td class="border-b border-text px-4 py-2">
               {{ player.name }}
             </td>
+            <td class="border-b border-x border-text px-4 py-2">{{ player.time }} s</td>
             <td class="border-b border-text px-4 py-2">{{ player.score }}</td>
           </tr>
         </tbody>

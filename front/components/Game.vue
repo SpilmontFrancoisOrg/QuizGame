@@ -97,7 +97,7 @@ export default {
         this.currentQuestion++
     },
     endGame() {
-      this.$emit('endGame')
+      this.$emit('endGame', this.score)
     },
     showLeaderboard() {
       this.$router.push('/leaderboard')

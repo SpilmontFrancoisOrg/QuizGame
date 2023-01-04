@@ -33,6 +33,7 @@ export default {
       difficulty: 1,
       started: false,
       currentGame: null,
+      timer: 0,
     }
   },
   methods: {
@@ -44,8 +45,14 @@ export default {
         if (data.questions.length > 0) {
           this.started = true
           this.currentGame = data
+
+          setInterval(() => {
+            this.timer += 0.1
+          }, 100)
         } else {
-          this.$toast.error('Aucune question n\'a été trouvée avec ces paramètres')
+          this.$toast.error(
+            "Aucune question n'a été trouvée avec ces paramètres"
+          )
         }
       } else {
         const toast = this.$toast.error('Veuillez remplir tous les champs')
@@ -54,9 +61,19 @@ export default {
         }, 5000)
       }
     },
-    endGame() {
+    async endGame(score) {
+      const { data } = await this.$axios.$post(
+        `/api/games/${this.currentGame.game.id}/end`,
+        {
+          score,
+          time: this.timer,
+        }
+      )
+
       this.started = false
       this.currentGame = null
+
+      console.log(data)
     },
   },
 }

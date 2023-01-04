@@ -17,7 +17,15 @@ class ThemeController extends Controller
      */
     public function index(): JsonResponse
     {
-        $themes = Theme::all();
+        $allThemes = Theme::all();
+
+        $themes = [];
+        foreach($allThemes as $theme){
+            //$id_theme = $theme->id;
+            if(Question::where('theme_id', $id_theme)){
+                $themes[] = $theme;
+            }
+        }
 
         foreach ($themes as $theme) {
             $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id=' . env('CLIENT_ID') . '&query=' . $theme->name)['results'][0]['urls']['thumb'];

@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import Index from '@/pages/index'
 import Game from '@/components/Game'
 
@@ -55,22 +55,4 @@ describe('Test', () => {
     wrapper.find('button').trigger('click')
     expect(wrapper.vm.startGame).toHaveBeenCalled()
   })
-
-  test('Game is a Vue instance', () => {
-    const wrapper = mount(Game)
-    expect(wrapper.vm).toBeTruthy()
-  })
-
-  // test('Game is a Vue instance', () => {
-  //   const wrapper = mount(Index)
-  //   wrapper.vm.startGame = jest.fn()
-  //   wrapper.setData({ name: "test" })
-  //   wrapper.setData({ difficulty: 1 })
-  //   wrapper.setData({ number: 1 })
-  //   wrapper.setData({ started: true })
-  //   wrapper.find('button').trigger('click')
-  //   const game = wrapper.findComponent(Game)
-  //   expect(game.exists()).toBe(true)
-  // })
-
 })

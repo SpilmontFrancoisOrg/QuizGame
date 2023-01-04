@@ -26,7 +26,7 @@
         :style="{ backgroundImage: 'url(' + theme.image + ')' }"
         @click="chooseTheme(theme.id)"
       >
-        <span class="bg-white rounded-full px-2 py-1 text-xl font-bold">
+        <span class="bg-white opacity-80 rounded-full px-2 py-1 text-xl font-bold">
           {{ theme.name }}
         </span>
       </div>

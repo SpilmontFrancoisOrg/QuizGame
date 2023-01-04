@@ -1,11 +1,16 @@
 <template>
   <div class="space-y-6">
-    <div class="card flex-row justify-evenly p-4">
-      <span class="text-2xl font-semibold">Partie en cours</span>
+    <div class="card flex-row justify-between p-6">
+      <span class="text-2xl font-semibold w-1/3">Partie en cours</span>
 
-      <span class="text-xl font-semibold"> Score : {{ score }} </span>
+      <div class="flex justify-center text-xl font-semibold space-x-2 w-1/3">
+        <span>Score : {{ score }}</span>
+        <span v-if="hasAnswered && answerIsCorrect" class="text-green">
+          +1
+        </span>
+      </div>
 
-      <span class="text-xl font-semibold">
+      <span class="flex justify-end text-xl font-semibold w-1/3">
         Question {{ currentQuestion + 1 }} sur
         {{ game.questions.length }}
       </span>
@@ -19,8 +24,7 @@
 
         <div class="grid grid-cols-2 gap-4">
           <button
-            v-for="(answer, index) in game.questions[currentQuestion]
-              .answers"
+            v-for="(answer, index) in game.questions[currentQuestion].answers"
             :key="index"
             class="btn-primary"
             :class="{
@@ -35,9 +39,7 @@
         </div>
 
         <button
-          v-if="
-            hasAnswered && currentQuestion < game.questions.length - 1
-          "
+          v-if="hasAnswered && currentQuestion < game.questions.length - 1"
           class="btn-secondary"
           @click="nextQuestion()"
         >
@@ -75,12 +77,19 @@ export default {
       currentQuestion: 0,
       score: 0,
       hasAnswered: false,
+      answerIsCorrect: false,
     }
   },
   methods: {
     checkAnswer(answer) {
       this.hasAnswered = true
-      if (answer.is_correct) this.score++
+      if (answer.is_correct) {
+        this.score++
+        this.answerIsCorrect = true
+        setTimeout(() => {
+          this.answerIsCorrect = false
+        }, 1000)
+      }
     },
     nextQuestion() {
       this.hasAnswered = false

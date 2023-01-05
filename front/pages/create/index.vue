@@ -268,6 +268,8 @@ export default {
         setTimeout(() => {
           toast.remove()
         }, 5000)
+
+        this.fetchThemes()
       } catch (error) {
         const toast = this.$toast.error(
           'Une erreur est survenue lors de la création du thème'

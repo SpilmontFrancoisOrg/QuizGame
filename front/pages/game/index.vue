@@ -12,7 +12,7 @@
       <input v-model="name" type="text" name="name" />
     </div>
     <div class="flex flex-col space-y-2 w-2/3">
-      <label for="number" class="text-xl">Nombre de questions :</label>
+      <label for="number" class="text-xl">Nombre de questions max :</label>
       <input v-model="number" type="number" name="number" min="1" />
     </div>
     <div class="flex flex-col space-y-2 w-2/3">

@@ -16,7 +16,7 @@ class ApiQuestionsRouteTest extends TestCase
             'theme_id' => '2',
             "answers" => [
                 ["name" => "me, I eat lol", "is_correct" => true],
-                ["name" => "me, I eat lol", "is_correct" => true]
+                ["name" => "you, you big", "is_correct" => false]
             ]
         ]);
 

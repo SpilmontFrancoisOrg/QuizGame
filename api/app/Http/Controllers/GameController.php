@@ -26,7 +26,7 @@ class GameController extends Controller
             || !$request->has('theme')
             || !$request->has('number')
         ) {
-            return $this->error('Missing parameters', 400);
+            return $this->error('Missing parameters', [], 400);
         }
 
         $questions = Question::inRandomOrder()

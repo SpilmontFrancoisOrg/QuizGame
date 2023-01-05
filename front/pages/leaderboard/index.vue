@@ -25,6 +25,7 @@
       <table
         class="table-auto w-1/3 border-separate border border-text rounded-xl"
       >
+        <caption />
         <thead>
           <tr>
             <th class="border-b border-text px-4 py-2 font-semibold">Nom</th>

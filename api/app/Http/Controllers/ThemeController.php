@@ -14,24 +14,31 @@ class ThemeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Request  $request
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $allThemes = Theme::all();
 
         $themes = [];
-        foreach ($allThemes as $theme) {
-            if (Question::where('theme_id', $theme->id)->count() > 0) {
-                $themes[] = $theme;
+
+        if ($request->input('with_images') === '1') {
+            foreach ($allThemes as $theme) {
+                if (Question::where('theme_id', $theme->id)->count() > 0) {
+                    $themes[] = $theme;
+                }
             }
+
+            foreach ($themes as $theme) {
+                $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id='
+                    . env('CLIENT_ID')
+                    . '&query=' . $theme->name)['results'][0]['urls']['thumb'];
+            }
+        } else {
+            $themes = $allThemes;
         }
 
-        foreach ($themes as $theme) {
-            $theme->image = Http::get('https://api.unsplash.com/search/photos/?client_id='
-                . env('CLIENT_ID')
-                . '&query=' . $theme->name)['results'][0]['urls']['thumb'];
-        }
         return $this->success(ThemeResource::collection($themes));
     }
 

@@ -16,16 +16,21 @@ class ApiGamesRouteTest extends TestCase
     
     public function test_the_application_returns_a_successful_response_for_game_page()
     {
-        $response = $this->get('/api/games?name=shirt');
+        $response = $this->get('/api/games?name=lAAOUINE');
 
         $response->assertStatus(200);
        
     }
-    public function test_the_application_response_for_game_page_()
+    public function test_the_application_response_for_game_page_at_the_game()
     {
-        $response = $this->get('/api/games?name=shirt');
-
-        $response->assertStatus(200);
-       
+        
+        $response = $this->postJson('/api/games/31/end', [
+            "name" => "lAAOUINE",
+            'score' => '25',
+            'date' => '1999-04-09',
+            'time' => '10',
+        ]);
+        $response
+            ->assertStatus(200);
     }
 }

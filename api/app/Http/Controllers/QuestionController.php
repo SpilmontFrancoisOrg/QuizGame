@@ -29,8 +29,9 @@ class QuestionController extends Controller
 
         $question = Question::create($input);
 
-        foreach ($input['answers'] as $answer)
+        foreach ($input['answers'] as $answer) {
             $question->answers()->create($answer);
+        }
 
         return $this->success(new QuestionResource($question));
     }

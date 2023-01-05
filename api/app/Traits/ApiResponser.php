@@ -16,9 +16,13 @@ namespace App\Traits;
     401: Unauthorized. The user needs to be authenticated.
     403: Forbidden. The user is authenticated, but does not have the permissions to perform an action.
     404: Not found. This will be returned automatically by Laravel when the resource is not found.
-    409: Not created or updated. This will be returned automatically by Laravel when the resource is not created or updated.
-    500: Internal server error. Ideally you're not going to be explicitly returning this, but if something unexpected breaks, this is what your user is going to receive.
-    503: Service unavailable. Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
+    409: Not created or updated.
+         This will be returned automatically by Laravel when the resource is not created or updated.
+    500: Internal server error.
+         Ideally you're not going to be explicitly returning this, but if something unexpected breaks,
+         this is what your user is going to receive.
+    503: Service unavailable.
+         Pretty self explanatory, but also another code that is not going to be returned explicitly by the application.
 |--------------------------------------------------------------------------
 */
 
@@ -59,7 +63,8 @@ trait ApiResponser
 
     protected function collectionPaginate(AnonymousResourceCollection $content, $message = null): JsonResponse
     {
-        return $content->additional([
+        return $content->additional(
+            [
                 'meta' => [
                     'success' => true,
                     'message' => $message
@@ -68,29 +73,34 @@ trait ApiResponser
         )->response()->setStatusCode(206);
     }
 
-    protected function resourceCreated($data = null, $message = 'resource created with success.'): JsonResponse {
+    protected function resourceCreated($data = null, $message = 'resource created with success.'): JsonResponse
+    {
         return $this->success($data, $message, 201);
     }
 
-    protected function resourceUpdated($data = null, $message = 'resource updated with success.'): JsonResponse {
+    protected function resourceUpdated($data = null, $message = 'resource updated with success.'): JsonResponse
+    {
         return $this->success($data, $message);
     }
 
 
-    protected function resourceDeleted(): JsonResponse {
+    protected function resourceDeleted(): JsonResponse
+    {
         return $this->success(null, null, 204);
     }
 
-    protected function resourceNotFound(): JsonResponse {
+    protected function resourceNotFound(): JsonResponse
+    {
         return $this->error('Not Found', 'Resource not found');
     }
 
-    protected function resourceNotCreated($errors): JsonResponse {
+    protected function resourceNotCreated($errors): JsonResponse
+    {
         return $this->error('Not Created', $errors, 409);
-
     }
 
-    protected function resourceNotUpdated($errors): JsonResponse {
+    protected function resourceNotUpdated($errors): JsonResponse
+    {
         return $this->error('Not Updated', $errors, 409);
     }
 }

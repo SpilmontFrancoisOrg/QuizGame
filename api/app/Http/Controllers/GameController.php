@@ -23,18 +23,23 @@ class GameController extends Controller
         $number = $request->input('number');
         $difficulty = $request->input('difficulty');
         $theme = $request->input('theme');
-        $questions = Question::inRandomOrder()->where(['difficulty' => $difficulty, 'theme_id' => $theme])->take($number)->get();
+        $questions = Question::inRandomOrder()
+            ->where(['difficulty' => $difficulty, 'theme_id' => $theme])
+            ->take($number)
+            ->get();
 
         $answers = [];
-        foreach ($questions as $question)
+        foreach ($questions as $question) {
             $answers[] = $question->answers()->get();
+        }
 
         $data = [];
-        foreach ($questions as $key => $question)
+        foreach ($questions as $key => $question) {
             $data[] = [
                 'question' => new QuestionResource($question),
                 'answers' => new AnswerResource($answers[$key])
             ];
+        }
 
         $name = $request->input('name');
 

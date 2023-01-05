@@ -20,6 +20,15 @@ class GameController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        if (
+            !$request->has('name')
+            || !$request->has('difficulty')
+            || !$request->has('theme')
+            || !$request->has('number')
+        ) {
+            return $this->error('Missing parameters', 400);
+        }
+
         $questions = Question::inRandomOrder()
             ->where(['difficulty' => $request->input('difficulty'), 'theme_id' => $request->input('theme')])
             ->take($request->input('number'))

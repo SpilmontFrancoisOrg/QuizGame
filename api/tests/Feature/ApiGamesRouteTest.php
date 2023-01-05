@@ -43,7 +43,7 @@ class ApiGamesRouteTest extends TestCase
                             "name",
                             "theme_id"
                         ]
-                    ]     
+                    ]   
                 ]
             ],
             "meta" => [

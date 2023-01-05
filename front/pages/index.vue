@@ -7,7 +7,11 @@
       <div class="w-1/3 flex items-center justify-center">
         <span class="font-semibold text-2xl">Choisissez le thème</span>
       </div>
-      <div class="w-1/3" />
+      <div class="w-1/3 flex items-center justify-end">
+        <button class="btn-primary" @click="$router.push('/create')">
+          Créer une question / un thème
+        </button>
+      </div>
     </div>
 
     <div v-if="loaded" class="flex flex-wrap">
@@ -55,7 +59,7 @@ export default {
   },
   methods: {
     async getThemes() {
-      const { data } = await this.$axios.$get('/api/themes')
+      const { data } = await this.$axios.$get('/api/themes?with_images=1')
       this.themes = data
       this.loaded = true
     },

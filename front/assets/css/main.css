@@ -78,3 +78,15 @@ input[type="text"], input[type="number"], select {
   top: 0% !important;
   right: 1% !important;
 }
+
+/** Treeselect **/
+
+/* General */
+.vue-treeselect__control, .vue-treeselect__menu {
+  @apply transition-colors bg-white text-text border-gray-600 !important;
+}
+
+/* When hover an option in list */
+.vue-treeselect__option--highlight {
+  @apply bg-back;
+}

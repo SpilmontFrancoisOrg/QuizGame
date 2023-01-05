@@ -56,9 +56,12 @@ export default {
             this.timer += 0.1
           }, 100)
         } else {
-          this.$toast.error(
+          const toast = this.$toast.error(
             "Aucune question n'a été trouvée avec ces paramètres"
           )
+          setTimeout(() => {
+            toast.remove()
+          }, 5000)
         }
       } else {
         const toast = this.$toast.error('Veuillez remplir tous les champs')

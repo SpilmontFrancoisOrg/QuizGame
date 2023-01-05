@@ -20,31 +20,21 @@ class GameController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $number = $request->input('number');
-        $difficulty = $request->input('difficulty');
-        $theme = $request->input('theme');
         $questions = Question::inRandomOrder()
-            ->where(['difficulty' => $difficulty, 'theme_id' => $theme])
-            ->take($number)
+            ->where(['difficulty' => $request->input('difficulty'), 'theme_id' => $request->input('theme')])
+            ->take($request->input('number'))
             ->get();
 
-        $answers = [];
-        foreach ($questions as $question) {
-            $answers[] = $question->answers()->get();
-        }
-
         $data = [];
-        foreach ($questions as $key => $question) {
+        foreach ($questions as $question) {
             $data[] = [
                 'question' => new QuestionResource($question),
-                'answers' => new AnswerResource($answers[$key])
+                'answers' => AnswerResource::collection($question->answers()->get())
             ];
         }
 
-        $name = $request->input('name');
-
         $game = new Game();
-        $game->name = $name;
+        $game->name = $request->input('name');
         $game->date = now()->toDateString();
         $game->save();
 

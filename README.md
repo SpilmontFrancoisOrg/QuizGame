@@ -17,7 +17,7 @@ Copiez le fichier `.env.example` en `.env` et configurez la connexion à la base
 
 Générez la base de données avec la commande :
 
-`> php artisan migrate:refresh --seed`
+`> php artisan migrate:fresh --seed`
 
 Pour lancer le serveur local, exécutez la commande :
 

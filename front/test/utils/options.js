@@ -8,5 +8,5 @@ export default {
       push: jest.fn(),
     },
   },
-  stubs: ['faIcon'],
+  stubs: ['faIcon', 'Treeselect', 'HomeButton', 'Game'],
 }

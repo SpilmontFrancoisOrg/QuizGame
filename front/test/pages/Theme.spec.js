@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import Index from '@/pages/index'
-import options from './options'
+import options from '../utils/options'
 
 describe('Themes', () => {
 
@@ -9,22 +9,22 @@ describe('Themes', () => {
     expect(wrapper.vm).toBeTruthy()
   })
 
-  test('is rendered', () => {
+  test('is rendered correctly', () => {
     const wrapper = mount(Index, options)
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('is null', () => {
+  test('themes is null by default', () => {
     const wrapper = mount(Index, options)
     expect(wrapper.vm.themes).toBeNull()
   })
 
-  test('is false', () => {
+  test('loaded is false by default', () => {
     const wrapper = mount(Index, options)
     expect(wrapper.vm.loaded).toBeFalsy()
   })
 
-  test('is an array', () => {
+  test('themes is an array after calling method', () => {
     const wrapper = mount(Index, options)
     wrapper.vm.getThemes()
       .then(() => {
@@ -32,7 +32,7 @@ describe('Themes', () => {
       })
   })
 
-  test('is true', () => {
+  test('loaded is true after calling method', () => {
     const wrapper = mount(Index, options)
     wrapper.vm.getThemes()
       .then(() => {
@@ -40,15 +40,15 @@ describe('Themes', () => {
       })
   })
 
-  test('is a button', () => {
+  test('a button exists', () => {
     const wrapper = mount(Index, options)
     expect(wrapper.find('button').exists()).toBeTruthy()
   })
 
-  test('is a button works', () => {
+  test('the button redirects to "/create" on click', () => {
     const wrapper = mount(Index, options)
     wrapper.find('button').trigger('click')
-    expect(wrapper.vm.$router.push).toHaveBeenCalled()
+    expect(wrapper.vm.$router.push).toHaveBeenCalledWith('/create')
   })
 
 })

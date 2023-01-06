@@ -1,14 +1,7 @@
 <template>
   <div class="space-y-6">
     <div class="card flex-row justify-between p-6">
-      <div class="w-1/3">
-        <img
-          src="@/assets/logo.png"
-          alt="logo"
-          class="h-16 w-16 cursor-pointer"
-          @click="$router.push('/')"
-        />
-      </div>
+      <HomeButton />
       <div class="w-1/3 flex items-center justify-center">
         <span class="font-semibold text-2xl">Création</span>
       </div>

@@ -58,4 +58,29 @@ describe('GameComponent', () => {
     const wrapper = mount(GameComponent, options)
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  test('currentQuestion is 0', () => {
+    const wrapper = mount(GameComponent, options)
+    expect(wrapper.vm.currentQuestion).toBe(0)
+  })
+
+  test('score is 0', () => {
+    const wrapper = mount(GameComponent, options)
+    expect(wrapper.vm.score).toBe(0)
+  })
+
+  test('hasAnswered is false', () => {
+    const wrapper = mount(GameComponent, options)
+    expect(wrapper.vm.hasAnswered).toBe(false)
+  })
+
+  test('answerIsCorrect is false', () => {
+    const wrapper = mount(GameComponent, options)
+    expect(wrapper.vm.answerIsCorrect).toBe(false)
+  })
+
+  test('button exists', () => {
+    const wrapper = mount(GameComponent, options)
+    expect(wrapper.find('button').exists()).toBe(true)
+  })
 })
